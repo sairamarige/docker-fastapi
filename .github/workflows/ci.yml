@@ -29,11 +29,7 @@ jobs:
           pip install pytest httpx
 
       - name: Run tests
-<<<<<<< HEAD
-		env:
-=======
         env:
->>>>>>> 32d43f1 (Fix CI workflow YAML indentation)
           PYTHONPATH: .
         run: python -m pytest
 
@@ -53,8 +49,4 @@ jobs:
           push: true
           tags: |
             ${{ vars.DOCKERHUB_USERNAME }}/docker-fastapi:latest
-<<<<<<< HEAD
             ${{ vars.DOCKERHUB_USERNAME }}/docker-fastapi:${{ github.sha }}
-=======
-            ${{ vars.DOCKERHUB_USERNAME }}/docker-fastapi:${{ github.sha }}sss
->>>>>>> 32d43f1 (Fix CI workflow YAML indentation)
