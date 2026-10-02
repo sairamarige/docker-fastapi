@@ -1,0 +1,21 @@
+name: CD
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show deployment information
+        run: |
+          echo "CD workflow started"
+          echo "Image:"
+          echo "${{ vars.DOCKERHUB_USERNAME }}/docker-fastapi:${{ github.sha }}"
+
+      - name: Deployment command for Kubernetes
+        run: |
+          echo "In a remote Kubernetes environment:"
+          echo "kubectl set image deployment/fastapi-deployment"
+          echo "fastapi=${{ vars.DOCKERHUB_USERNAME }}/docker-fastapi:${{ github.sha }}"
