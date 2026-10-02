@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: fastapi-deployment
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: fastapi
+
+  template:
+    metadata:
+      labels:
+        app: fastapi
+
+    spec:
+      containers:
+        - name: fastapi
+          image: docker-fastapi-api:latest
+
+          ports:
+            - containerPort: 8000
+
+          env:
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: fastapi-config
+                  key: APP_NAME
+
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: fastapi-config
+                  key: APP_ENV
+
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: fastapi-config
+                  key: LOG_LEVEL
+
+            - name: MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: fastapi-config
+                  key: MYSQL_HOST
+
+            - name: MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: fastapi-config
+                  key: MYSQL_PORT
+
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_DATABASE
